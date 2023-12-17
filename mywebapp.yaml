@@ -22,6 +22,8 @@ spec:
       containers:
       - name:  mywebapp
         image:  santoshgoswami/mywebapp:latest
+      nodeSelector:
+        deploy: mywebapp
 #        readinessProbe:
 #          httpGet:
 #            path: /WebApp/
