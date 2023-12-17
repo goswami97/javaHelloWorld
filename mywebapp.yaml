@@ -9,6 +9,11 @@ spec:
     matchLabels:
       app: mywebapp
   replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -17,20 +22,15 @@ spec:
       containers:
       - name:  mywebapp
         image:  santoshgoswami/mywebapp:latest
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-            #        readinessProbe:
-            #          httpGet:
-            #            path: /WebApp/
-            #            port: 8080
-            #          initialDelaySeconds: 5
-            #          timeoutSeconds: 10
-            #          successThreshold: 1
-            #          failureThreshold: 3
-            #          periodSeconds: 10
+#        readinessProbe:
+#          httpGet:
+#            path: /WebApp/
+#            port: 8080
+#          initialDelaySeconds: 5
+#          timeoutSeconds: 2
+#          successThreshold: 1
+#          failureThreshold: 3
+#          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
@@ -39,10 +39,9 @@ metadata:
 spec:
   selector:
     app: mywebapp
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: mywebapp
     protocol: TCP
     port: 8080
     targetPort: 8080
-    nodePort: 31200
