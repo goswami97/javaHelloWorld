@@ -17,6 +17,7 @@ spec:
       containers:
       - name:  mywebapp
         image:  santoshgoswami/mywebapp:latest
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
