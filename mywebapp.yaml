@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name:  mywebapp-deployment
-  namespace: dev
   labels:
     app:  mywebapp
 spec:
@@ -18,27 +17,24 @@ spec:
       containers:
       - name:  mywebapp
         image:  santoshgoswami/mywebapp:latest
-        #image: santoshgoswami/samplewebapp:1.1.2
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
-        readinessProbe:
-          httpGet:
-            path: /WebApp/
-            #path: /LoginWebApp-1/
-            port: 8080
-          initialDelaySeconds: 5
-          timeoutSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
-          periodSeconds: 10
+            #        readinessProbe:
+            #          httpGet:
+            #            path: /WebApp/
+            #            port: 8080
+            #          initialDelaySeconds: 5
+            #          timeoutSeconds: 10
+            #          successThreshold: 1
+            #          failureThreshold: 3
+            #          periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mywebapp-service
-  namespace: dev
 spec:
   selector:
     app: mywebapp
